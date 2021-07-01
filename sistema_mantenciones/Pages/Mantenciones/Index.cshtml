@@ -1,0 +1,35 @@
+@page
+@model IndexModel
+@using Data
+
+@{
+    ViewData["Title"] = "Mantenciones";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Mantenciones</h1>
+</div>
+<div>
+    <p>
+        <a asp-page="./Crear">Registar Nueva Mantención</a>
+    </p>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Mantencion mantencion in Model.Mantenciones)
+            {
+                <tr>
+                    <th scope="row">@mantencion.Fecha.ToString("dd/MM/yyyy")</th>
+                    <td>@mantencion.Observaciones</td>
+                    <td><a asp-page="./Detalle" asp-route-id="@mantencion.Id">Detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

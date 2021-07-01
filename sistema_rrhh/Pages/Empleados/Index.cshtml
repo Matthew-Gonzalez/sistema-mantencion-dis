@@ -1,0 +1,34 @@
+@page
+@model IndexModel
+@using Data
+
+@{
+    ViewData["Title"] = "Empleados";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Empleados</h1>
+</div>
+<div>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">RUT</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Total Horas Trabajadas</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TempEmpleado temp in Model.TempEmpleados)
+            {
+                <tr>
+                    <th scope="row">@temp.Empleado.Rut</th>
+                    <td>@temp.Empleado.Nombre</td>
+                    <td>@temp.HorasTrabajo</td>
+                    <td><a asp-page="./Horas" asp-route-id="@temp.Empleado.Rut">Detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

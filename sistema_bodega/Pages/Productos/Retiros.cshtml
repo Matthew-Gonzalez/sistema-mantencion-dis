@@ -1,0 +1,34 @@
+@page
+@model RetirosModel
+@using Data
+
+@{
+    ViewData["Title"] = "Retiros";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Retiros</h1>
+</div>
+<div>
+    <p>
+        <a asp-page="./Index">Volver</a>
+    </p>
+    <p>@Model.Producto.Id - @Model.Producto.Nombre</p>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cantidad Total Retirada</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ProductoRetiro retiro in Model.ProductoRetiros)
+            {
+                <tr>
+                    <th scope="row">@retiro.Fecha.ToString("dd/MM/yyyy")</th>
+                    <td>@retiro.Cantidad</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

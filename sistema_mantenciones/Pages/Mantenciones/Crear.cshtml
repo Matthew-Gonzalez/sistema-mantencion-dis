@@ -1,0 +1,108 @@
+@page
+@model CrearModel
+@using Data
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Crear Mantencion</h1>
+</div>
+<div class="container">
+    @if (Model.Mantencion == null)
+    {
+        <p>Selecciona un primer empleado y producto</p>
+        <form asp-page-handler="Nueva" method="POST">
+            <p>Fecha: <input type="date" name=fecha></input></p>
+            <p>
+                <label for="observaciones" class="form-label">Observaciones: </label>
+                <textarea class="form-control" id="observacionesTextArea" name="observaciones" rows="3"></textarea>
+            </p>
+            <p>
+                Empleado: <select name="rut_empleado" asp-items="Model.Empleados"></select>
+                Horas: <input type="number" min="1" value="1" name="horas">
+            </p>
+            <p>
+                Producto: <select name="id_producto" asp-items="Model.Productos"></select>
+                Cantidad: <input type="number" min="1" value="1" name="cantidad">
+            </p>
+            <p>
+                Enviar para agregar más:
+                <input type="submit" value="Registrar Mantencion">
+            </p>
+        </form>
+    }
+    else
+    {
+        <p>Agrega más productos y/o empleados</p>
+        <p>Fecha: @Model.Mantencion.Fecha</p>
+        <p>Observaciones: </p>
+        @if (string.IsNullOrEmpty(Model.Mantencion.Observaciones))
+        {
+            <p>Ninguna</p>
+        }
+        else
+        {
+            <p>@Model.Mantencion.Observaciones</p>
+        }
+        <form asp-page-handler="Actualizar" method="POST">
+            <p>
+                Empleado:
+                <select name="rut_empleado" asp-items="Model.Empleados">
+                    <option value="">Ninguno</option>
+                </select>
+                Horas: <input type="number" min="1" value="1" name="horas">
+            </p>
+            <p>
+                Producto:
+                <select name="id_producto" asp-items="Model.Productos">
+                    <option value="0">Ninguno</option>
+                </select>
+                Cantidad: <input type="number" min="1" value="1" name="cantidad">
+            </p>
+            <p>
+                <input type="submit" value="Añadir Empleados y Productos">
+            </p>
+            <input type="hidden" name="id_mantencion" value="@Model.Mantencion.Id">
+            <input type="hidden" name="fecha" value="@Model.Mantencion.Fecha">
+        </form>
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (MantencionProducto mantencionProducto in Model.MantencionProductos)
+                {
+                    <tr>
+                        <th scope="row">@mantencionProducto.Producto.Id</th>
+                        <td>@mantencionProducto.Producto.Nombre</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (MantencionEmpleado mantencionEmpleado in Model.MantencionEmpleados)
+                {
+                    <tr>
+                        <th scope="row">@mantencionEmpleado.Empleado.Rut</th>
+                        <td>@mantencionEmpleado.Empleado.Nombre</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <p>
+        <a asp-page="./Index">Volver</a>
+    </p>
+</div>

@@ -1,0 +1,56 @@
+@page
+@model CrearModel
+@using Data
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Mantencion</h1>
+</div>
+<div>
+    <p>Fecha: @Model.Mantencion.Fecha</p>
+    <p>Observaciones: @Model.Mantencion.Observaciones</p>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad Usada</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MantencionProducto mantencionProducto in Model.MantencionProductos)
+            {
+                <tr>
+                    <th scope="row">@mantencionProducto.Producto.Id</th>
+                    <td>@mantencionProducto.Producto.Nombre</td>
+                    <td>@mantencionProducto.Cantidad</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">RUT</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Horas Trabajadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MantencionEmpleado mantencionEmpleado in Model.MantencionEmpleados)
+            {
+                <tr>
+                    <th scope="row">@mantencionEmpleado.Empleado.Rut</th>
+                    <td>@mantencionEmpleado.Empleado.Nombre</td>
+                    <td>@mantencionEmpleado.Horas</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a asp-page="./Index">Volver</a>
+    </p>
+</div>
